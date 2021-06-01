@@ -3,75 +3,72 @@ package com.palmieri.web;
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WindowType;
-import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.*;
 import java.util.Properties;
-
-import static com.palmieri.GlobalParameters.CHROME_DRIVER_PATH;
-import static com.palmieri.GlobalParameters.PROPERTIES_PATH;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Test_WEB_001 {
 
-    static Properties webProp = null;
+    static private ManagementDriver managementDriver = null;
+    static private WebDriver driver = null;
+    static private Properties webProp = null;
 
     @BeforeAll
-    static void beforeAll(){
+    static void beforeAll() {
         webProp = Utility.loadProp("web");
-        ManagementDriver.startDriver();
+        managementDriver.startDriver();
+        driver = ManagementDriver.getDriver();
     }
 
     @BeforeEach
-    void beforeEach() {}
+    void beforeEach() {
+    }
 
     @Order(1)
     @Test
     @DisplayName("Simulazioni tasti navigazione browser")
-    void test_001(){
+    void test_001() {
         String title = "";
         String currentUrl = "";
 
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().get(webProp.getProperty("ebay.url"));
+        driver.get(webProp.getProperty("google.url"));
+        driver.get(webProp.getProperty("ebay.url"));
 
-        title = ManagementDriver.getDriver().getTitle();
-        currentUrl = ManagementDriver.getDriver().getCurrentUrl();
+        title = driver.getTitle();
+        currentUrl = driver.getCurrentUrl();
 
-        System.out.println("title = " + title );
-        System.out.println("current url = " + currentUrl );
+        System.out.println("title = " + title);
+        System.out.println("current url = " + currentUrl);
 
-        ManagementDriver.getDriver().navigate().back();
+        driver.navigate().back();
 
-        title = ManagementDriver.getDriver().getTitle();
-        currentUrl = ManagementDriver.getDriver().getCurrentUrl();
+        title = driver.getTitle();
+        currentUrl = driver.getCurrentUrl();
 
-        System.out.println("title = " + title );
-        System.out.println("current url = " + currentUrl );
-        ManagementDriver.getDriver().navigate().forward();
-        ManagementDriver.getDriver().navigate().refresh();
+        System.out.println("title = " + title);
+        System.out.println("current url = " + currentUrl);
+        driver.navigate().forward();
+        driver.navigate().refresh();
 
     }
 
     @Order(2)
     @Test
     @DisplayName("Test Window Browser")
-    void test_002(){
+    void test_002() {
         String handleWindow = "";
         int width = 0;
         int height = 0;
         int x = 0;
         int y = 0;
 
-        ManagementDriver.getDriver().get(webProp.getProperty("ebay.url"));
+        driver.get(webProp.getProperty("ebay.url"));
 
-        handleWindow = ManagementDriver.getDriver().getWindowHandle();
-        width = ManagementDriver.getDriver().manage().window().getSize().getWidth();
-        height = ManagementDriver.getDriver().manage().window().getSize().getHeight();
-        x = ManagementDriver.getDriver().manage().window().getPosition().getX();
-        y = ManagementDriver.getDriver().manage().window().getPosition().getY();
+        handleWindow = driver.getWindowHandle();
+        width = driver.manage().window().getSize().getWidth();
+        height = driver.manage().window().getSize().getHeight();
+        x = driver.manage().window().getPosition().getX();
+        y = driver.manage().window().getPosition().getY();
 
         System.out.println("handle Window = " + handleWindow);
         System.out.println("width = " + width);
@@ -79,26 +76,29 @@ public class Test_WEB_001 {
         System.out.println("Pos x = " + x);
         System.out.println("Pos y = " + y);
 
-        ManagementDriver.getDriver().manage().window().setSize(new Dimension(1024,768));
-        ManagementDriver.getDriver().manage().window().setPosition(new Point(500,0));
-        ManagementDriver.getDriver().manage().window().minimize();
-        ManagementDriver.getDriver().manage().window().maximize();
-        ManagementDriver.getDriver().manage().window().fullscreen();
-        ManagementDriver.getDriver().switchTo().newWindow(WindowType.TAB);
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().close();
-        ManagementDriver.getDriver().switchTo().window(handleWindow);
+        driver.manage().window().setSize(new Dimension(1024, 768));
+        driver.manage().window().setPosition(new Point(500, 0));
+        driver.manage().window().minimize();
+        driver.manage().window().maximize();
+        driver.manage().window().fullscreen();
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get(webProp.getProperty("google.url"));
+        driver.close();
+        driver.switchTo().window(handleWindow);
 
-        ManagementDriver.getDriver().switchTo().newWindow(WindowType.WINDOW);
-        ManagementDriver.getDriver().get(webProp.getProperty("google.url"));
-        ManagementDriver.getDriver().close();
+        driver.switchTo().newWindow(WindowType.WINDOW);
+        driver.get(webProp.getProperty("google.url"));
+        driver.close();
+        driver.switchTo().window(handleWindow);
     }
 
     @AfterEach
-    void tearDown() {}
+    void tearDown() {
+    }
 
     @AfterAll
     static void tearDownAll() {
-       // ManagementDriver.stopDriver();
+        managementDriver.stopDriver();
     }
+
 }
