@@ -14,7 +14,7 @@ public class IlmeteoSteps {
     private WebDriver driver = ManagementDriver.getDriver();
 
     public void search(Properties prop, String q) {
-        webElement = driver.findElement(By.id(prop.getProperty("id.z  input.search")));
+        webElement = driver.findElement(By.id(prop.getProperty("id.input.search")));
         webElement.clear();
         webElement.sendKeys(q);
         driver.findElement(By.id(prop.getProperty("id.btn.search"))).click();
@@ -34,6 +34,6 @@ public class IlmeteoSteps {
     }
 
     public List<WebElement> getMenuTabs(Properties prop) {
-        return driver.findElements(By.xpath("//*[@class=\"tab\"]/span"));
+        return driver.findElement(By.id(prop.getProperty("id.page.menu"))).findElements(By.tagName("a"));
     }
 }

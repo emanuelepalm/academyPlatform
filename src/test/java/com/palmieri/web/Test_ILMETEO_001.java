@@ -7,9 +7,7 @@ import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.awt.image.ByteLookupTable;
 import java.util.List;
@@ -53,22 +51,23 @@ public class Test_ILMETEO_001 {
     @Order(2)
     @Test
     @DisplayName("Check titoli")
-    void test_002() throws InterruptedException {
+    void test_003() throws InterruptedException {
         driver.get(webProp.getProperty("ilmeteo.url"));
-
-        for(int i = 2; i<steps.getMenuTabs(webProp).size(); i++) {
-            WebElement element = steps.getMenuTabs(webProp).get(i);
-            element = driver.findElement(By.id("tab"+i));
-            element.click();
-                element = driver.findElement(By.id("tab"+i));
+        String handle = driver.getWindowHandle();
+        for(WebElement element : steps.getMenuTabs(webProp)) {
+            String elementText = element.getText();
+            if (!elementText.equals("Home")) {
+                String a = element.getAttribute("href");
+                driver.switchTo().newWindow(WindowType.TAB);
+                driver.get(a);
                 Thread.sleep(4000);
-                WebElement comparato = driver.findElement(By.xpath(webProp.getProperty("xpath.page.title")));
-                assertTrue(comparato.getText().toLowerCase().contains(element.getText().toLowerCase()));
-            System.out.println(element.getText());
-            System.out.println(comparato.getText());
+                assertTrue(driver.findElement(By.xpath(webProp.getProperty("xpath.page.title"))).getText().toLowerCase().contains(elementText.toLowerCase()));
+                driver.close();
+                driver.switchTo().window(handle);
             }
-
         }
+
+    }
 
     @AfterEach
     void tearDown() {
