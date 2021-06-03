@@ -9,7 +9,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static com.palmieri.GlobalParameters.CHROME_DRIVER_PATH_WIN;
 
 public class ManagementDriver {
-    static ChromeDriver driver;
+
+    private static ChromeDriver driver;
 
     public static void startDriver(){
         System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH_WIN);

@@ -1,15 +1,17 @@
 package com.palmieri.web;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.EbaySteps;
+import com.palmieri.steps.EbaySteps;
 import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
 
 import java.util.Properties;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -48,6 +50,32 @@ public class Test_EBAY_001 {
         }
     }
 
+    @Order(2)
+    @ParameterizedTest(name = "q = {0}, c= {0}")
+    @CsvSource({"iphone, cell phone","ipad, tablet"})
+    @DisplayName("Controllare che esista il prodotto ricercato e la categoria selezionata")
+    void test_002(String q, String c) {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.closeBanner(webProp);
+        assertTrue(ebaySteps.selectCategory(webProp, c).isSelected());
+        ebaySteps.search(webProp, q);
+        assertTrue(driver.findElement(By.xpath(webProp.getProperty("xpath.span.selected.category"))).getText().toLowerCase().contains(c));
+    }
+
+    @Order(3)
+    @ParameterizedTest(name = "q = {0}")
+    @ValueSource(strings = {"iphone","ipad"})
+    @DisplayName("Controllare che esista il prodotto ricercato (fluent wait)")
+    void test_003(String q) {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.closeBannerFluent(webProp);
+        ebaySteps.search(webProp, q);
+        String result = driver.findElement(By.xpath(webProp.getProperty("xpath.span.result"))).getText();
+        System.out.println(q + " trovati: " + result);
+        if(result.length() < 1) {
+            fail(q + " non presente");
+        }
+    }
     @AfterEach
     void tearDown() {
     }
