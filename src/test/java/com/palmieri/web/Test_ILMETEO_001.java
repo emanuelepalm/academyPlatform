@@ -54,7 +54,7 @@ public class Test_ILMETEO_001 {
     void test_003() throws InterruptedException {
         driver.get(webProp.getProperty("ilmeteo.url"));
         String handle = driver.getWindowHandle();
-        for(WebElement element : steps.getMenuTabs(webProp)) {
+        for(WebElement element : steps.getMenuTabs(webProp,"id.page.menu")) {
             String elementText = element.getText();
             if (!elementText.equals("Home")) {
                 String a = element.getAttribute("href");

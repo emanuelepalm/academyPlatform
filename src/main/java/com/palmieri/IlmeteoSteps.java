@@ -33,7 +33,7 @@ public class IlmeteoSteps {
         }
     }
 
-    public List<WebElement> getMenuTabs(Properties prop) {
-        return driver.findElement(By.id(prop.getProperty("id.page.menu"))).findElements(By.tagName("a"));
+    public List<WebElement> getMenuTabs(Properties prop, String propKey) {
+        return driver.findElement(By.id(prop.getProperty(propKey))).findElements(By.tagName("a"));
     }
 }
