@@ -1,21 +1,23 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.models.EbayProduct;
+import com.palmieri.models.SelectMenuEbay;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class EbaySteps {
 
-
+    private SelectMenuEbay selectMenuEbay;
     private WebElement webElement;
     private WebDriver driver = ManagementDriver.getDriver();
 
@@ -57,7 +59,32 @@ public class EbaySteps {
         return driver.findElement(By.id(prop.getProperty("id.select.category"))).findElements(By.tagName("option"));
     }
 
-    public WebElement   selectCategory(Properties prop, String c) {
+    public SelectMenuEbay getTabsAsObject(String propKey) {
+       HashMap<String, String> mapOptions = new HashMap<>();
+        for(WebElement element : driver.findElement(By.id(propKey)).findElements(By.tagName("option"))) {
+            mapOptions.put(element.getAttribute("value"),element.getText());
+        }
+        return new SelectMenuEbay(mapOptions,
+                driver.findElement(By.id(propKey)).getAttribute("name"),
+                driver.findElement(By.id(propKey)).getAttribute("class"),
+                propKey
+                );
+    }
+
+    public ArrayList<EbayProduct> getProducts(Properties prop) {
+        ArrayList<EbayProduct> ebayProducts = new ArrayList<>();
+        for (WebElement e : driver.findElement(By.id(prop.getProperty("id.div.result"))).findElements(By.className(prop.getProperty("class.element.result")))) {
+            ebayProducts.add(new EbayProduct(e.findElement(By.tagName("h3")).getText(),
+                            e.findElement(By.className(prop.getProperty("class.result.subtitle"))).getText(),
+                            e.findElement(By.className(prop.getProperty("class.result.price"))).getText(),
+                            e.findElement(By.tagName("img")).getAttribute("src")
+                            ));
+        }
+        return  ebayProducts;
+    }
+
+
+    public WebElement  selectCategory(Properties prop, String c) {
         driver.findElement(By.id(prop.getProperty("id.select.category"))).click();
         for(WebElement element : getTabs(prop)) {
             if(element.getText().toLowerCase().contains(c)){

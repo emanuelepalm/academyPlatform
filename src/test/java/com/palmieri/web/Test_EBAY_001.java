@@ -1,6 +1,8 @@
 package com.palmieri.web;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.models.EbayProduct;
+import com.palmieri.models.SelectMenuEbay;
 import com.palmieri.steps.EbaySteps;
 import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
@@ -76,6 +78,27 @@ public class Test_EBAY_001 {
             fail(q + " non presente");
         }
     }
+
+    @Order(4)
+    @Test
+    @DisplayName("Controllo categorie con modello")
+    void test_004() {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.getTabsAsObject(webProp.getProperty("id.select.category")).print();
+    }
+
+    @Order(5)
+    @ParameterizedTest(name = "q = {0}")
+    @ValueSource(strings = {"iphone","ipad"})
+    @DisplayName("Controllare che esista il prodotto ricercato (fluent wait)")
+    void test_005(String q) {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.search(webProp, q);
+        for(EbayProduct p : ebaySteps.getProducts(webProp)) {
+            p.print();
+        }
+    }
+
     @AfterEach
     void tearDown() {
     }
