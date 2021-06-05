@@ -4,13 +4,24 @@ import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+import static javax.swing.UIManager.put;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Test_WEB_001 {
 
     static private ManagementDriver managementDriver = null;
-    static private WebDriver driver = null;
+    static private ChromeDriver driver = null;
     static private Properties webProp = null;
 
     @BeforeAll
@@ -90,6 +101,28 @@ public class Test_WEB_001 {
         driver.get(webProp.getProperty("google.url"));
         driver.close();
         driver.switchTo().window(handleWindow);
+    }
+
+    @Order(3)
+    @Test
+    @DisplayName("TestScreenshot")
+    void test_003(TestInfo testInfo) {
+        driver.get(webProp.getProperty("google.url"));
+        Utility.Screenshot(driver,testInfo.getDisplayName() );
+    }
+
+    @Order(4)
+    @Test
+    @DisplayName("Test Geolocalizzazione")
+    void test_004() {
+            Map coordinates = new HashMap()
+            {{
+                put("latitude", 42.460790);
+                put("longitude", 14.213230);
+                put("accuracy", 1);
+            }};
+            driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+            driver.get("http://maps.google.it");
     }
 
     @AfterEach

@@ -30,7 +30,7 @@ public class GlobalParameters {
     public static final String HTTP		 								= "http";
     public static final String HTTPS 									= "https";
 
-    public static final String USER_DIR 								= System.getProperty("user.dir");
+    public static final String USER_DIR 								= "C:\\Users\\lelej\\Desktop\\academyPlatform";
     public static final String SRC_DIR 									= USER_DIR + File.separator + "src";
     public static final String MAIN_DIR 								= SRC_DIR + File.separator + "main";
     public static final String ROOT_PATH_TEST 							= SRC_DIR + File.separator + "test" + File.separator + "java";

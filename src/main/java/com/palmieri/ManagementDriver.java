@@ -23,7 +23,7 @@ public class ManagementDriver {
         BasicConfigurator.configure();
     }
 
-    public static WebDriver getDriver() {
+    public static ChromeDriver getDriver() {
         return driver;
     }
 
