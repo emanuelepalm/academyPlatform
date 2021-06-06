@@ -13,6 +13,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import static com.palmieri.GlobalParameters.*;
@@ -30,7 +31,7 @@ public class Utility {
     }
 
     public static void Screenshot(WebDriver driver, String testName) {
-        String fileName = testName +  new SimpleDateFormat("yyyyMMddHHmm'.txt'").format(new Date());
+        String fileName = testName +  new SimpleDateFormat("yyyyMMddHHmm'.txt'").format(new Date()).replace(".txt","");
 
         try {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -39,5 +40,13 @@ public class Utility {
         catch (IOException e) {
             System.out.println(e.getMessage() + e.getCause());
         }
+    }
+
+    public static HashMap<String, Object> createMap() {
+        HashMap<String, Object> coordinate = new HashMap<>();
+        coordinate.put("latitude", 37.89703180341463);
+        coordinate.put("longitude",41.12869044940056);
+        coordinate.put("accuracy", 1);
+        return coordinate;
     }
 }

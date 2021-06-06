@@ -2,19 +2,19 @@ package com.palmieri.web;
 
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
+import com.palmieri.steps.WebSteps;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import static javax.swing.UIManager.put;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -23,12 +23,14 @@ public class Test_WEB_001 {
     static private ManagementDriver managementDriver = null;
     static private ChromeDriver driver = null;
     static private Properties webProp = null;
+    static private WebSteps steps = null;
 
     @BeforeAll
     static void beforeAll() {
         webProp = Utility.loadProp("web");
         managementDriver.startDriver();
         driver = ManagementDriver.getDriver();
+        steps = new WebSteps();
     }
 
     @BeforeEach
@@ -114,15 +116,13 @@ public class Test_WEB_001 {
     @Order(4)
     @Test
     @DisplayName("Test Geolocalizzazione")
-    void test_004() {
-            Map coordinates = new HashMap()
-            {{
-                put("latitude", 42.460790);
-                put("longitude", 14.213230);
-                put("accuracy", 1);
-            }};
-            driver.executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
-            driver.get("http://maps.google.it");
+    void test_004(TestInfo testInfo) throws InterruptedException {
+        driver.executeCdpCommand("Emulation.setGeolocationOverride", Utility.createMap());
+        driver.navigate().to("https://www.google.com/maps");
+        steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.accept.maps"));
+        steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.my.location"));
+        Thread.sleep(5000);
+        Utility.Screenshot(driver,testInfo.getDisplayName());
     }
 
     @AfterEach
