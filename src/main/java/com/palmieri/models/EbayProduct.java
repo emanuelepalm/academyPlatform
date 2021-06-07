@@ -6,7 +6,7 @@ public class EbayProduct {
     private String price;
     private String imgHref;
 
-    public EbayProduct(String name, String desc, String price, String imgHref) {
+    public EbayProduct(String name, String desc,String price, String imgHref) {
         this.name = name;
         this.desc = desc;
         this.price = price;
@@ -29,13 +29,6 @@ public class EbayProduct {
         this.desc = desc;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
     public String getImgHref() {
         return imgHref;

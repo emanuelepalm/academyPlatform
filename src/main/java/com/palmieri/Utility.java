@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -31,10 +33,9 @@ public class Utility {
     }
 
     public static void Screenshot(WebDriver driver, String testName) {
-        String fileName = testName +  new SimpleDateFormat("yyyyMMddHHmm'.txt'").format(new Date()).replace(".txt","");
-
+        String fileName = testName +  new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
         try {
-            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File scrFile  = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(scrFile, new File(SCREENSHOT_PATH + fileName + EXT_PNG));
         }
         catch (IOException e) {
@@ -42,10 +43,21 @@ public class Utility {
         }
     }
 
-    public static HashMap<String, Object> createMap() {
+    public static void Screenshot(String testName) {
+        String fileName = testName + "bytes" + new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+        try {
+            byte[] imgBytes  = ((TakesScreenshot) ManagementDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            Files.write(Paths.get(SCREENSHOT_PATH + fileName + EXT_PNG),imgBytes);
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage() + e.getCause());
+        }
+    }
+
+    public static HashMap<String, Object> createMap(Object o, Object o2) {
         HashMap<String, Object> coordinate = new HashMap<>();
-        coordinate.put("latitude", 37.89703180341463);
-        coordinate.put("longitude",41.12869044940056);
+        coordinate.put("latitude", o);
+        coordinate.put("longitude",o2);
         coordinate.put("accuracy", 1);
         return coordinate;
     }

@@ -12,11 +12,16 @@ public class ManagementDriver {
 
     private static ChromeDriver driver;
 
-    public static void startDriver(){
+    public static void startDriver(DefaultChromeOptions defaultChromeOptions){
         System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH_WIN);
         System.setProperty("org.freemarker.loggerLibrary","none");
-        driver = new ChromeDriver();
         new ChromeOptions().setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
+        if(defaultChromeOptions == null) {
+            defaultChromeOptions = new DefaultChromeOptions(new ChromeOptions());
+        }
+        driver = new ChromeDriver(defaultChromeOptions);
+
         System.err.close();
         System.setErr(System.out);
         Utility.loadProp("log4j");

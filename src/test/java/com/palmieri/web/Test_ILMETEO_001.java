@@ -1,5 +1,6 @@
 package com.palmieri.web;
 
+import com.palmieri.DefaultChromeOptions;
 import com.palmieri.steps.IlMeteoSteps;
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
@@ -21,11 +22,12 @@ public class Test_ILMETEO_001 {
     static private WebDriver driver = null;
     static private IlMeteoSteps steps = null;
     static private Properties webProp = null;
+    static private DefaultChromeOptions defaultChromeOptions = null;
 
     @BeforeAll
     static void beforeAll() {
         webProp = Utility.loadProp("ilmeteo");
-        managementDriver.startDriver();
+        managementDriver.startDriver(defaultChromeOptions);
         driver = ManagementDriver.getDriver();
         steps = new IlMeteoSteps();
     }

@@ -1,8 +1,10 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.Utility;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Properties;
 
-public class WebSteps {
+public class GoogleSteps {
     ChromeDriver driver = ManagementDriver.getDriver();
     WebElement webElement = null;
 
@@ -22,15 +24,16 @@ public class WebSteps {
                     .pollingEvery(Duration.ofSeconds(3))
                     .ignoring(NoSuchElementException.class);
 
+            WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+                webElement.click();
 
-            WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
-            if (webElement.isDisplayed()) {
-                webElement.submit();
-            }
         } catch (TimeoutException e) {
-            System.out.println("Banner non trovato");
+            Utility.Screenshot("exception_clickOnButtonByXpath");
+            System.out.println("Pulsante non trovato");
         }
     }
+
+
     public void search(Properties prop, String q) {
         try{
             webElement = new WebDriverWait(driver, Duration.ofSeconds(5))

@@ -1,9 +1,12 @@
 package com.palmieri.web;
 
+import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
 import com.palmieri.steps.WebSteps;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
@@ -25,11 +28,12 @@ public class Test_WEB_001 {
     static private ChromeDriver driver = null;
     static private Properties webProp = null;
     static private WebSteps steps = null;
+    static private DefaultChromeOptions defaultChromeOptions = null;
 
     @BeforeAll
     static void beforeAll() {
         webProp = Utility.loadProp("web");
-        managementDriver.startDriver();
+        managementDriver.startDriver(defaultChromeOptions);
         driver = ManagementDriver.getDriver();
         steps = new WebSteps();
     }
@@ -115,16 +119,18 @@ public class Test_WEB_001 {
     }
 
     @Order(4)
-    @Test
+    @ParameterizedTest
+    @CsvSource({"37.89703180341463, 41.12869044940056"})
     @DisplayName("Test Geolocalizzazione")
-    void test_004(TestInfo testInfo) throws InterruptedException {
-        driver.executeCdpCommand("Emulation.setGeolocationOverride", Utility.createMap());
+    void test_004(double o, double o2) throws InterruptedException {
+        driver.executeCdpCommand("Emulation.setGeolocationOverride", Utility.createMap(o, o2));
         driver.navigate().to("https://www.google.com/maps");
         steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.accept.maps"));
         steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.my.location"));
-        Thread.sleep(5000);
-        Utility.Screenshot(driver,testInfo.getDisplayName());
+        Thread.sleep(7000);
+        Utility.Screenshot(driver,"TestGeolocalizzazione");
     }
+
     @Order(5)
     @Test
     @DisplayName("Test Colore")

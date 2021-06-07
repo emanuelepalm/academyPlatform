@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.security.Key;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
@@ -25,7 +26,7 @@ public class EbaySteps {
         webElement = driver.findElement(By.name(prop.getProperty("name.input.search")));
         webElement.clear();
         webElement.sendKeys(q);
-        driver.findElement(By.id(prop.getProperty("id.btn.search"))).click();
+        webElement.sendKeys(Keys.ENTER);
     }
     public void closeBanner(Properties prop) {
         try{
@@ -73,11 +74,11 @@ public class EbaySteps {
 
     public ArrayList<EbayProduct> getProducts(Properties prop) {
         ArrayList<EbayProduct> ebayProducts = new ArrayList<>();
-        for (WebElement e : driver.findElement(By.id(prop.getProperty("id.div.result"))).findElements(By.className(prop.getProperty("class.element.result")))) {
+        for (WebElement e : driver.findElement(By.xpath(prop.getProperty("xpath.div.result"))).findElements(By.className("s-item"))) {
             ebayProducts.add(new EbayProduct(e.findElement(By.tagName("h3")).getText(),
                             e.findElement(By.className(prop.getProperty("class.result.subtitle"))).getText(),
                             e.findElement(By.className(prop.getProperty("class.result.price"))).getText(),
-                            e.findElement(By.tagName("img")).getAttribute("src")
+                            e.findElement(By.className(prop.getProperty("class.img.result"))).getAttribute("src")
                             ));
         }
         return  ebayProducts;
@@ -90,7 +91,6 @@ public class EbaySteps {
             if(element.getText().toLowerCase().contains(c)){
                 element.click();
                 return element;
-
             }
         }
         return null;
