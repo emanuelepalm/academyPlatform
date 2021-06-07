@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -123,6 +124,14 @@ public class Test_WEB_001 {
         steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.my.location"));
         Thread.sleep(5000);
         Utility.Screenshot(driver,testInfo.getDisplayName());
+    }
+    @Order(5)
+    @Test
+    @DisplayName("Test Colore")
+    void test_005() throws InterruptedException {
+        driver.navigate().to("https://www.google.com/");
+        steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.google.accept"));
+        assertTrue(driver.findElement(By.xpath(webProp.getProperty("xpath.accedi.button"))).getCssValue("background-color").equals("rgba(26, 115, 232, 1)"));
     }
 
     @AfterEach
