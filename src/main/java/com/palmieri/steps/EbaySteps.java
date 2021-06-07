@@ -1,6 +1,7 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.Utility;
 import com.palmieri.models.EbayProduct;
 import com.palmieri.models.SelectMenuEbay;
 import org.openqa.selenium.*;
@@ -94,5 +95,43 @@ public class EbaySteps {
             }
         }
         return null;
+    }
+
+    public boolean forward(Properties prop, int n) {
+        for(int i = 1; i < n; i++) {
+            clickOnButtonByClassName(prop.getProperty("class.next.btn"));
+          //  for(EbayProduct e : getProducts(prop)) e.print();
+          //  Utility.Screenshot("forward"+i);
+            if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i+1) )) return false;
+        }
+        return true;
+    }
+
+    public boolean backward (Properties prop, int n) {
+        for(int i = n; i > 1; i--) {
+            clickOnButtonByClassName(prop.getProperty("class.previous.btn"));
+            //for(EbayProduct e : getProducts(prop)) e.print();
+            //Utility.Screenshot("backward"+i);
+            if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i - 1) )) return false;
+        }
+        return true;
+    }
+
+
+    public void clickOnButtonByClassName(String nameClass){
+        try {
+            Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                    .withTimeout(Duration.ofSeconds(9))
+                    .pollingEvery(Duration.ofSeconds(3))
+                    .ignoring(NoSuchElementException.class);
+
+
+            WebElement webElement = wait.until(driver -> driver.findElement(By.className(nameClass)));
+            if (webElement.isDisplayed()) {
+                webElement.click();
+            }
+        } catch (TimeoutException e) {
+            System.out.println("Banner non trovato");
+        }
     }
 }

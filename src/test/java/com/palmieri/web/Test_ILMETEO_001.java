@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -23,10 +24,19 @@ public class Test_ILMETEO_001 {
     static private IlMeteoSteps steps = null;
     static private Properties webProp = null;
     static private DefaultChromeOptions defaultChromeOptions = null;
+    static private boolean mobile = true;
+    static private String propname = "ilmeteo";
 
     @BeforeAll
     static void beforeAll() {
-        webProp = Utility.loadProp("ilmeteo");
+        if(mobile) {
+            propname += ".mobile";
+            defaultChromeOptions = new DefaultChromeOptions(new ChromeOptions());
+            defaultChromeOptions.addArguments("--window-size=375,812");
+            defaultChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
+        }
+        managementDriver.startDriver(defaultChromeOptions);
+        webProp = Utility.loadProp(propname);
         managementDriver.startDriver(defaultChromeOptions);
         driver = ManagementDriver.getDriver();
         steps = new IlMeteoSteps();

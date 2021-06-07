@@ -115,7 +115,17 @@ public class Test_EBAY_001 {
             p.print();
         }
     }
+    @Order(6)
+    @ParameterizedTest(name = "q = {0} n = {0}")
+    @CsvSource({"iphone , 5"})
+    @DisplayName("Avanti e indietro tra le pagine")
+    void test_005(String q, int n) {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.search(webProp, q);
+        assertTrue(ebaySteps.forward(webProp, n));
+        assertTrue(ebaySteps.backward(webProp, n));
 
+    }
     @AfterEach
     void tearDown() {
     }
