@@ -13,9 +13,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.security.Key;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EbaySteps {
 
@@ -29,6 +31,7 @@ public class EbaySteps {
         webElement.sendKeys(q);
         webElement.sendKeys(Keys.ENTER);
     }
+
     public void closeBanner(Properties prop) {
         try{
             webElement = new WebDriverWait(driver, Duration.ofSeconds(3))
@@ -39,6 +42,8 @@ public class EbaySteps {
             }
         }catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Banner non trovato");
+            Utility.Screenshot("closeBannerException");
+
         }
     }
 
@@ -55,8 +60,10 @@ public class EbaySteps {
             }
         }catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Banner non trovato");
+            Utility.Screenshot("closeBannerFluentException");
         }
     }
+
     public List<WebElement> getTabs(Properties prop) {
         return driver.findElement(By.id(prop.getProperty("id.select.category"))).findElements(By.tagName("option"));
     }
@@ -85,6 +92,27 @@ public class EbaySteps {
         return  ebayProducts;
     }
 
+    public void openCart(Properties prop){
+        clickOnButtonByClassName(prop.getProperty("class.cart.btn"));
+    }
+
+    public ArrayList<EbayProduct> elementToProduct(Properties prop, List<WebElement> list) {
+        ArrayList<EbayProduct> ebayProducts = new ArrayList<>();
+        for (WebElement e : list) {
+            ebayProducts.add(new EbayProduct(e.findElement(By.tagName("h3")).getText(),
+                    e.findElement(By.className(prop.getProperty("class.result.subtitle"))).getText(),
+                    e.findElement(By.className(prop.getProperty("class.result.price"))).getText(),
+                    e.findElement(By.className(prop.getProperty("class.img.result"))).getAttribute("src")
+            ));
+        }
+        return  ebayProducts;
+    }
+
+    public List<WebElement> getWebProducts(Properties prop) {
+       return driver.findElement(By.xpath(prop.getProperty("xpath.div.result"))).findElements(By.className("s-item"));
+
+
+    }
 
     public WebElement  selectCategory(Properties prop, String c) {
         driver.findElement(By.id(prop.getProperty("id.select.category"))).click();
@@ -97,11 +125,50 @@ public class EbaySteps {
         return null;
     }
 
+    public void register(Properties prop, String email) throws InterruptedException{
+        clickOnButtonByXpath(prop.getProperty("xpath.icon.a"));
+        Thread.sleep(30000);
+        clickOnButtonByXpath(prop.getProperty("xpath.sign.a"));
+        clickOnButtonById(prop.getProperty("id.input.firstname")).sendKeys("Prancesco");
+        clickOnButtonById(prop.getProperty("id.input.lastname")).sendKeys("Andonelli");
+        clickOnButtonById(prop.getProperty("id.input.email")).sendKeys(email);
+        clickOnButtonById(prop.getProperty("id.input.password")).sendKeys("Able1234.");
+        clickOnButtonById(prop.getProperty("id.btn.submit"));
+        driver.findElement(By.name(prop.getProperty("name.btn.replace")));
+        Utility.Screenshot("Register");
+    }
+
+    public ArrayList<WebElement> getCartList(Properties prop, int i) {
+        ArrayList<WebElement> cartElements = new ArrayList<>();
+        cartElements.addAll(getWebProducts(prop).subList(0,i));
+        return cartElements;
+    }
+
+    public void addToCart(Properties prop,String href, String handle) {
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get(href);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement aggiungi = driver.findElement(By.id(prop.getProperty("id.addcart.btn")));
+        js.executeScript("arguments[0].scrollIntoView();", aggiungi);
+        aggiungi.click();
+        driver.close();
+        driver.switchTo().window(handle);
+
+    }
+
+    public double getPrice(Properties prop) {
+        for(WebElement e : driver.findElements(By.className("row"))) {
+            if (e.findElement(By.className("val-col")).getAttribute("data-test-id").contains("ITEM_TOTAL"))
+                return Double.valueOf(e.findElement(By.className("val-col")).getText().substring(1));
+        }
+        return 0;
+    }
+
     public boolean forward(Properties prop, int n) {
         for(int i = 1; i < n; i++) {
             clickOnButtonByClassName(prop.getProperty("class.next.btn"));
-          //  for(EbayProduct e : getProducts(prop)) e.print();
-          //  Utility.Screenshot("forward"+i);
+            for(EbayProduct e : getProducts(prop)) e.print();
+            Utility.Screenshot("forward"+i);
             if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i+1) )) return false;
         }
         return true;
@@ -117,7 +184,6 @@ public class EbaySteps {
         return true;
     }
 
-
     public void clickOnButtonByClassName(String nameClass){
         try {
             Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
@@ -132,6 +198,54 @@ public class EbaySteps {
             }
         } catch (TimeoutException e) {
             System.out.println("Banner non trovato");
+            Utility.Screenshot("clickOnButtonByClassNameException");
+        }
+    }
+
+    public WebElement clickOnButtonById(String id){
+        try {
+            Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                    .withTimeout(Duration.ofSeconds(9))
+                    .pollingEvery(Duration.ofSeconds(3))
+                    .ignoring(NoSuchElementException.class);
+
+
+            WebElement webElement = wait.until(driver -> driver.findElement(By.id(id)));
+            if (webElement.isDisplayed()) {
+                webElement.click();
+                return webElement;
+            }
+        } catch (TimeoutException e) {
+            Utility.Screenshot("clickOnButtonByClassNameException");
+        }
+        return null;
+    }
+
+    public void removeItem(Properties prop, int n) {
+      List<WebElement> cartItems = driver.findElements(By.className(prop.getProperty("class.item.cart")));
+       for (WebElement e :cartItems.get(n).findElements(By.className("faux-link"))){
+           if(e.getAttribute("data-test-id").equals(prop.getProperty("data-test-id"))) {
+               e.click();
+               break;
+           }
+       }
+    }
+    
+    public void clickOnButtonByXpath(String xpath){
+        try {
+            Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                    .withTimeout(Duration.ofSeconds(9))
+                    .pollingEvery(Duration.ofSeconds(3))
+                    .ignoring(NoSuchElementException.class);
+
+
+            WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
+            if (webElement.isDisplayed()) {
+                webElement.click();
+            }
+        } catch (TimeoutException e) {
+            System.out.println("Pulsante non trovato");
+            Utility.Screenshot("clickOnButtonByClassNameException");
         }
     }
 }

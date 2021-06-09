@@ -11,6 +11,15 @@ import static com.palmieri.GlobalParameters.CHROME_DRIVER_PATH_WIN;
 public class ManagementDriver {
 
     private static ChromeDriver driver;
+    private static boolean mobile = false;
+
+    public static boolean isMobile() {
+        return mobile;
+    }
+
+    public static void setMobile(boolean mobile) {
+        ManagementDriver.mobile = mobile;
+    }
 
     public static void startDriver(DefaultChromeOptions defaultChromeOptions){
         System.setProperty("webdriver.chrome.driver",CHROME_DRIVER_PATH_WIN);

@@ -24,12 +24,12 @@ public class Test_ILMETEO_001 {
     static private IlMeteoSteps steps = null;
     static private Properties webProp = null;
     static private DefaultChromeOptions defaultChromeOptions = null;
-    static private boolean mobile = true;
     static private String propname = "ilmeteo";
 
     @BeforeAll
     static void beforeAll() {
-        if(mobile) {
+        ManagementDriver.setMobile(true);
+        if(ManagementDriver.isMobile()) {
             propname += ".mobile";
             defaultChromeOptions = new DefaultChromeOptions(new ChromeOptions());
             defaultChromeOptions.addArguments("--window-size=375,812");

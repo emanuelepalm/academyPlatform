@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.Properties;
 
@@ -44,6 +43,7 @@ public class GoogleSteps {
                 webElement.sendKeys(Keys.ENTER);
             }
         }catch (NoSuchElementException | TimeoutException e) {
+            Utility.Screenshot("searchException");
             System.out.println(e.getCause() + " " + e.getMessage());
         }
 

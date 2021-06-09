@@ -3,7 +3,6 @@ package com.palmieri.web;
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.models.EbayProduct;
-import com.palmieri.models.SelectMenuEbay;
 import com.palmieri.steps.EbaySteps;
 import com.palmieri.Utility;
 import org.junit.jupiter.api.*;
@@ -13,10 +12,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Test_EBAY_001 {
@@ -27,13 +26,12 @@ public class Test_EBAY_001 {
     static private WebElement webElement = null;
     static private Properties webProp = null;
     static private DefaultChromeOptions defaultChromeOptions = null;
-    static private Boolean mobile = true;
     static private String propname = "ebay";
 
     @BeforeAll
     static void beforeAll() {
-
-        if(mobile) {
+        ManagementDriver.setMobile(true);
+        if(ManagementDriver.isMobile()) {
             propname += ".mobile";
             defaultChromeOptions = new DefaultChromeOptions(new ChromeOptions());
             defaultChromeOptions.addArguments("--window-size=375,812");
@@ -93,7 +91,6 @@ public class Test_EBAY_001 {
         }
     }
 
-
     @Disabled
     @Order(4)
     @Test
@@ -111,28 +108,61 @@ public class Test_EBAY_001 {
         driver.get(webProp.getProperty("ebay.url"));
         ebaySteps.search(webProp, q);
 
-        for(EbayProduct p : ebaySteps.getProducts(webProp)) {
+         for(EbayProduct p : ebaySteps.getProducts(webProp)) {
             p.print();
         }
     }
+
     @Order(6)
     @ParameterizedTest(name = "q = {0} n = {0}")
     @CsvSource({"iphone , 5"})
     @DisplayName("Avanti e indietro tra le pagine")
-    void test_005(String q, int n) {
+    void test_006(String q, int n) {
         driver.get(webProp.getProperty("ebay.url"));
         ebaySteps.search(webProp, q);
         assertTrue(ebaySteps.forward(webProp, n));
         assertTrue(ebaySteps.backward(webProp, n));
 
     }
+
+
+    @Order(7)
+    @ParameterizedTest(name = "q = {0} n = {0}")
+    @ValueSource(strings = {"dobaye6039@revutap.com"})
+    @DisplayName("Registazione")
+    void test_007(String email) throws InterruptedException {
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.register(webProp, email);
+    }
+
+    @Order(8)
+    @ParameterizedTest(name = "q = {0} n = {0}")
+    @CsvSource({"pippo , 3, 2"})
+    @DisplayName("Carrello")
+    void test_008(String q, int n, int r) {
+        double totalPrice = 0;
+        driver.get(webProp.getProperty("ebay.url"));
+        ebaySteps.search(webProp, q);
+        ArrayList<WebElement> listCarrello = ebaySteps.getCartList(webProp, n);
+        for (WebElement e : listCarrello){
+            String a = e.findElement(By.tagName("a")).getAttribute("href");
+            ebaySteps.addToCart(webProp, a, driver.getWindowHandle());
+        }
+        for(EbayProduct product : ebaySteps.elementToProduct(webProp,listCarrello)) {
+            totalPrice += Double.valueOf(product.getPrice().substring(1));
+        }
+        ebaySteps.openCart(webProp);
+        assertEquals(totalPrice, ebaySteps.getPrice(webProp));
+        ebaySteps.removeItem(webProp, r);
+        assertEquals(totalPrice -Double.valueOf(ebaySteps.elementToProduct(webProp,listCarrello).get(r).getPrice()), ebaySteps.getPrice(webProp));
+    }
+
     @AfterEach
     void tearDown() {
     }
 
     @AfterAll
-    static void tearDownAll() {
-        managementDriver.stopDriver();
+    static void tearDownAll(){ //managementDriver.stopDriver();
     }
 
 }
