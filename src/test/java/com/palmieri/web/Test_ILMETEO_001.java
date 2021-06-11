@@ -70,9 +70,9 @@ public class Test_ILMETEO_001 {
             String elementText = element.getText();
             if (!elementText.equals("Home")) {
                 String a = element.getAttribute("href");
-                driver.switchTo().newWindow(WindowType.TAB);
+           //     driver.switchTo().newWindow(WindowType.TAB);
                 driver.get(a);
-                WebElement webElement = new WebDriverWait(driver, Duration.ofSeconds(3))
+                WebElement webElement = new WebDriverWait(driver, (3))
                         .until(driver -> driver.findElement(By.xpath(webProp.getProperty("xpath.page.title"))));
                 assertTrue(driver.findElement(By.xpath(webProp.getProperty("xpath.page.title"))).getText().toLowerCase().contains(elementText.toLowerCase()));
                 driver.close();

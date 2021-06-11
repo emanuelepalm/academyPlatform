@@ -21,7 +21,7 @@ public class IlMeteoSteps {
 
     public void closeBanner(Properties prop) {
         try{
-            webElement = new WebDriverWait(driver, Duration.ofSeconds(3))
+            webElement = new WebDriverWait(driver, (long) 5)
                     .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.cookie"))));
             webElement = driver.findElement(By.id(prop.getProperty("id.banner.cookie")));
             if(webElement.isDisplayed()) {

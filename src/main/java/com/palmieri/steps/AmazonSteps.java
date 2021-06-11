@@ -36,7 +36,7 @@ public class AmazonSteps {
     }
 
     public void search(Properties prop, String q) {
-            webElement = new WebDriverWait(driver, Duration.ofSeconds(5))
+            webElement = new WebDriverWait(driver, (long) 5)
                     .until(driver -> driver.findElement(By.xpath(prop.getProperty("xpath.input.search"))));
             if(webElement.isDisplayed()) {
                 webElement.clear();

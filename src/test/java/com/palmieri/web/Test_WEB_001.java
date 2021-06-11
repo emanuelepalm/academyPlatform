@@ -4,6 +4,7 @@ import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
 import com.palmieri.steps.WebSteps;
+import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -89,15 +90,15 @@ public class Test_WEB_001 {
 
         driver.manage().window().setSize(new Dimension(1024, 768));
         driver.manage().window().setPosition(new Point(500, 0));
-        driver.manage().window().minimize();
+  //      driver.manage().window().minimize();
         driver.manage().window().maximize();
         driver.manage().window().fullscreen();
-        driver.switchTo().newWindow(WindowType.TAB);
+    //    driver.switchTo().newWindow(WindowType.TAB);
         driver.get(webProp.getProperty("google.url"));
         driver.close();
         driver.switchTo().window(handleWindow);
 
-        driver.switchTo().newWindow(WindowType.WINDOW);
+      //  driver.switchTo().newWindow(WindowType.WINDOW);
         driver.get(webProp.getProperty("google.url"));
         driver.close();
         driver.switchTo().window(handleWindow);
@@ -110,13 +111,13 @@ public class Test_WEB_001 {
         driver.get(webProp.getProperty("google.url"));
         Utility.Screenshot(driver,testInfo.getDisplayName() );
     }
-
+    @Ignore
     @Order(4)
     @ParameterizedTest
     @CsvSource({"37.89703180341463, 41.12869044940056"})
     @DisplayName("Test Geolocalizzazione")
     void test_004(double o, double o2) throws InterruptedException {
-        driver.executeCdpCommand("Emulation.setGeolocationOverride", Utility.createMap(o, o2));
+      //  driver.executeCdpCommand("Emulation.setGeolocationOverride", Utility.createMap(o, o2));
         driver.navigate().to("https://www.google.com/maps");
         steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.accept.maps"));
         steps.clickOnButtonByXpath(webProp.getProperty("xpath.btn.my.location"));

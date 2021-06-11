@@ -47,13 +47,10 @@ public class ManagementDriver {
         BasicConfigurator.configure();
     }
 
-    public static void startAppium(String platform, DesiredCapabilities desiredCapabilities) {
+    public static void startAppium(DesiredCapabilities desiredCapabilities) {
         try {
-            if(platform.equals("ANDROID")) {
-                androidDriver = new AndroidDriver<WebElement>(new URL(ANDROID_DRIVER_URL), desiredCapabilities);
-            } else {
-                iosDriver = new IOSDriver<WebElement>(new URL(IOS_DRIVER_URL), desiredCapabilities);
-            }
+            androidDriver = new AndroidDriver<>(new URL(ANDROID_DRIVER_URL), desiredCapabilities);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

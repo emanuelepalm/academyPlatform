@@ -30,7 +30,7 @@ public class EbaySteps {
 
     public void closeBanner(Properties prop) {
         try{
-            webElement = new WebDriverWait(driver, Duration.ofSeconds(3))
+            webElement = new WebDriverWait(driver, (long) 5)
                     .until(driver -> driver.findElement(By.id(prop.getProperty("id.banner.gdp"))));
             if(webElement.isDisplayed()) {
                 driver.findElement(By.id(prop.getProperty("id.btn.gdp.accept"))).click();
@@ -141,7 +141,7 @@ public class EbaySteps {
     }
 
     public void addToCart(Properties prop,String href, String handle) {
-        driver.switchTo().newWindow(WindowType.TAB);
+        driver.switchTo().window(handle);
         driver.get(href);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebElement aggiungi = driver.findElement(By.id(prop.getProperty("id.addcart.btn")));

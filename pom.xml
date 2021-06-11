@@ -22,7 +22,7 @@
         <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
         <cucumber-junit.version>1.2.5</cucumber-junit.version>
         <cucumber-java.version>1.2.5</cucumber-java.version>
-        <selenium.version>4.0.0-beta-3</selenium.version>
+        <selenium.version>3.141.59</selenium.version>
         <appium.client.version>7.3.0</appium.client.version>
         <reports-plugin.version>2.41.2</reports-plugin.version>
         <log4j.version>1.2.17</log4j.version>
@@ -108,11 +108,7 @@
             <version>3.0.0-M4</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.palmieri</groupId>
-            <artifactId>academyPlatform</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>

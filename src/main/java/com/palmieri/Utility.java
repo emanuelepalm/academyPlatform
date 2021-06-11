@@ -94,7 +94,38 @@ public class Utility {
         }
         return null;
     }
+    public static String getBase64MobileScreenshot() {
+        try {
+            SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmmss");
+            String sDate = oSDF.format(new Date());
+            String encodedBase64 = null;
+            FileInputStream fileInputStream = null;
+            String destination = "";
+            File source = null;
 
+            source = ((TakesScreenshot) ManagementDriver.getAndroidDriver()).getScreenshotAs(OutputType.FILE);
+            destination = SCREENSHOT_PATH  +  File.separator + File.separator + sDate + EXT_PNG;
+
+            File finalDestination = new File(destination);
+            FileUtils.copyFile(Objects.requireNonNull(source), finalDestination);
+
+            try {
+                fileInputStream = new FileInputStream(finalDestination);
+                byte[] bytes = new byte[(int) finalDestination.length()];
+                int fileSize = fileInputStream.read(bytes);
+                encodedBase64 = new String(Base64.encodeBase64(bytes));
+
+            } catch (FileNotFoundException ex) {
+                Assert.fail("Errore: "+ ex.getMessage());
+            } finally {
+                if(fileInputStream != null) fileInputStream.close();
+            }
+            return "data:image/png;base64," + encodedBase64;
+        } catch (Exception ex) {
+            Assert.fail("Errore: "+ ex.getMessage());
+        }
+        return null;
+    }
 
 
     public static HashMap<String, Object> createMap(Object o, Object o2) {
