@@ -8,15 +8,16 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.time.Duration;
 import java.util.Properties;
 
 public class AndroidSteps {
 
-        AndroidDriver<?> driver = ManagementDriver.getAndroidDriver();
-        WebElement webElement = null;
+    AndroidDriver<?> driver = ManagementDriver.getAndroidDriver();
+    ExtentTest extentTest = null;
 
+        public AndroidSteps() {
+    }
 
         public void clickOnButtonByXpath(String xpath){
             try {
@@ -46,7 +47,7 @@ public class AndroidSteps {
             return true;
             }
             catch (Exception e) {
-                extentTest.log(LogStatus.INFO, "Clicco Login", extentTest.addBase64ScreenShot(Utility.getBase64MobileScreenshot()));
+                extentTest.log(LogStatus.ERROR, "Clicco Login", extentTest.addBase64ScreenShot(Utility.getBase64MobileScreenshot()));
             }
             return false;
         }
