@@ -53,7 +53,7 @@ public class GlobalParameters {
 
     //ANDROID DRIVER
     public static final String ANDROID_DRIVER_URL                       = "http://127.0.0.1:4723/wd/hub/";
-    public static final String IOS_DRIVER_URL                       = "http://127.0.0.1:4723/wd/hub/";
+    public static final String IOS_DRIVER_URL                           = "http://127.0.0.1:4723/wd/hub/";
 
 
     // CHROME DRIVER
