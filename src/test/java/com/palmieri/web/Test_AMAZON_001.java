@@ -4,13 +4,10 @@ import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.Utility;
 import com.palmieri.steps.AmazonSteps;
-import com.palmieri.steps.GoogleSteps;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -46,7 +43,7 @@ public class Test_AMAZON_001 {
             extentReports.loadConfig(new File(REPORT_CONFIG_XML));
             webProp = Utility.loadProp(propname);
             managementDriver.startDriver(defaultChromeOptions);
-            driver = ManagementDriver.getDriver();
+            driver = ManagementDriver.getChromeDriver();
             steps = new AmazonSteps();
         }
 

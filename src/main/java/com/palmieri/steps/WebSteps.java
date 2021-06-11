@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.util.Properties;
 
 public class WebSteps {
-    ChromeDriver driver = ManagementDriver.getDriver();
+    ChromeDriver driver = ManagementDriver.getChromeDriver();
     WebElement webElement = null;
 
 

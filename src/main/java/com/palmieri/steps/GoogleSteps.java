@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.Properties;
 
 public class GoogleSteps {
-    ChromeDriver driver = ManagementDriver.getDriver();
+    ChromeDriver driver = ManagementDriver.getChromeDriver();
     WebElement webElement = null;
 
 

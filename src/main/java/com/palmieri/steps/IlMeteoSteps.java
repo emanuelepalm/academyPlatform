@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class IlMeteoSteps {
     private WebElement webElement;
-    private WebDriver driver = ManagementDriver.getDriver();
+    private WebDriver driver = ManagementDriver.getChromeDriver();
 
     public void search(Properties prop, String q) {
         webElement = driver.findElement(By.id(prop.getProperty("id.input.search")));

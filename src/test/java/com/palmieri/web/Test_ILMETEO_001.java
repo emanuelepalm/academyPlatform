@@ -38,7 +38,7 @@ public class Test_ILMETEO_001 {
         managementDriver.startDriver(defaultChromeOptions);
         webProp = Utility.loadProp(propname);
         managementDriver.startDriver(defaultChromeOptions);
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         steps = new IlMeteoSteps();
     }
 

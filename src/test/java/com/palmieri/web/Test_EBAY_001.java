@@ -40,7 +40,7 @@ public class Test_EBAY_001 {
         managementDriver.startDriver(defaultChromeOptions);
         webProp = Utility.loadProp(propname);
 
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         ebaySteps = new EbaySteps();
     }
 

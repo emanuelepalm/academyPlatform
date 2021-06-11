@@ -42,7 +42,6 @@ public class GlobalParameters {
     public static final String PROPERTIES_PATH 							= RESOURCES_PATH + File.separator + "properties";
     public static final String BASE_PATH_APP 							= RESOURCES_PATH + File.separator + "apps";
     public static final String CONFIG_PATH 								= PROPERTIES_PATH + File.separator + "config";
-
     public static final String PROPERTIES_LOG4J_PATH 					= CONFIG_PATH + File.separator + "log4j";
 
 
@@ -51,6 +50,11 @@ public class GlobalParameters {
     public static final String WINDOWS_SO 								= "Windows";
     public static final String MAC_SO 									= "Mac OS X";
     public static final String LINUX_SO 								= "Linux";
+
+    //ANDROID DRIVER
+    public static final String ANDROID_DRIVER_URL                       = "http://127.0.0.1:4723/wd/hub/";
+    public static final String IOS_DRIVER_URL                       = "http://127.0.0.1:4723/wd/hub/";
+
 
     // CHROME DRIVER
     public static final String BASE_CHROME_PATH							= BASE_DRIVER_PATH + "chrome" + File.separator;

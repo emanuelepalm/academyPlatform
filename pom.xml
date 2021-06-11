@@ -108,6 +108,16 @@
             <version>3.0.0-M4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.palmieri</groupId>
+            <artifactId>academyPlatform</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.5.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

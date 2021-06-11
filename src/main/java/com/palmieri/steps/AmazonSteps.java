@@ -10,11 +10,10 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Properties;
 
 public class AmazonSteps {
-    ChromeDriver driver = ManagementDriver.getDriver();
+    ChromeDriver driver = ManagementDriver.getChromeDriver();
     WebElement webElement = null;
 
 

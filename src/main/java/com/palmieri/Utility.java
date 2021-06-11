@@ -51,7 +51,7 @@ public class Utility {
     public static boolean Screenshot(String testName) {
         String fileName = testName + "bytes" + new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
         try {
-            byte[] imgBytes  = ((TakesScreenshot) ManagementDriver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            byte[] imgBytes  = ((TakesScreenshot) ManagementDriver.getChromeDriver()).getScreenshotAs(OutputType.BYTES);
             Files.write(Paths.get(SCREENSHOT_PATH + fileName + EXT_PNG),imgBytes);
             return true;
 
@@ -71,7 +71,7 @@ public class Utility {
             String destination = "";
             File source = null;
 
-            source = ((TakesScreenshot) ManagementDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+            source = ((TakesScreenshot) ManagementDriver.getChromeDriver()).getScreenshotAs(OutputType.FILE);
             destination = SCREENSHOT_PATH  +  File.separator + File.separator + sDate + EXT_PNG;
 
             File finalDestination = new File(destination);

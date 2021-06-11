@@ -1,16 +1,26 @@
 package com.palmieri;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static com.palmieri.GlobalParameters.CHROME_DRIVER_PATH_WIN;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static com.palmieri.GlobalParameters.*;
 
 public class ManagementDriver {
 
     private static ChromeDriver driver;
+    private static AndroidDriver<?> androidDriver;
+    private static IOSDriver<?> iosDriver;
     private static boolean mobile = false;
 
     public static boolean isMobile() {
@@ -37,11 +47,27 @@ public class ManagementDriver {
         BasicConfigurator.configure();
     }
 
-    public static ChromeDriver getDriver() {
+    public static void startAppium(String platform, DesiredCapabilities desiredCapabilities) {
+        try {
+            if(platform.equals("ANDROID")) {
+                androidDriver = new AndroidDriver<WebElement>(new URL(ANDROID_DRIVER_URL), desiredCapabilities);
+            } else {
+                iosDriver = new IOSDriver<WebElement>(new URL(IOS_DRIVER_URL), desiredCapabilities);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static AndroidDriver getAndroidDriver() {
+        return androidDriver;
+    }
+
+    public static ChromeDriver getChromeDriver() {
         return driver;
     }
 
     public static void stopDriver() {
-        driver.quit();
+        if(driver != null)driver.quit();
+        if(androidDriver != null)androidDriver.quit();
     }
 }

@@ -10,20 +10,16 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.security.Key;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EbaySteps {
 
     private SelectMenuEbay selectMenuEbay;
     private WebElement webElement;
-    private WebDriver driver = ManagementDriver.getDriver();
+    private WebDriver driver = ManagementDriver.getChromeDriver();
 
     public void search(Properties prop,String q) {
         webElement = driver.findElement(By.name(prop.getProperty("name.input.search")));

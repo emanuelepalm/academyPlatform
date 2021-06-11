@@ -27,7 +27,7 @@ public class Test_WEB_001 {
     static void beforeAll() {
         webProp = Utility.loadProp("web");
         managementDriver.startDriver(defaultChromeOptions);
-        driver = ManagementDriver.getDriver();
+        driver = ManagementDriver.getChromeDriver();
         steps = new WebSteps();
     }
 
