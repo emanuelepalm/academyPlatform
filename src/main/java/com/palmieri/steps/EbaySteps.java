@@ -159,9 +159,15 @@ public class EbaySteps {
     public double getPrice(Properties prop) {
         for(WebElement e : driver.findElements(By.className("row"))) {
             if (e.findElement(By.className("val-col")).getAttribute("data-test-id").contains("ITEM_TOTAL"))
-                return Double.valueOf(e.findElement(By.className("val-col")).getText().substring(1));
+                return Double.valueOf(e.findElement(By.className("val-col")).getText().substring(1,6));
         }
         return 0;
+    }
+
+    public void modQuantity(Properties prop, int n) {
+        WebElement e = driver.findElements(By.cssSelector("input[data-test-id=\"qty-textbox\"]")).get(n);
+        e.clear();
+        e.sendKeys("2" + Keys.ENTER);
     }
 
     public boolean forward(Properties prop, int n) {

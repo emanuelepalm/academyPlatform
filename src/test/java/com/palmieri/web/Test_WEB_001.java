@@ -73,7 +73,7 @@ public class Test_WEB_001 {
         int x = 0;
         int y = 0;
 
-        driver.get(webProp.getProperty("ebay.url"));
+        driver.get(webProp.getProperty("ebay.url")) ;
 
         handleWindow = driver.getWindowHandle();
         width = driver.manage().window().getSize().getWidth();

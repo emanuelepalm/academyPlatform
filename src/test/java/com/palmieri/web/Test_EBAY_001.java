@@ -137,7 +137,7 @@ public class Test_EBAY_001 {
 
     @Order(8)
     @ParameterizedTest(name = "q = {0} n = {0}")
-    @CsvSource({"pippo , 3, 2"})
+    @CsvSource({"iphone , 3, 2"})
     @DisplayName("Carrello")
     void test_008(String q, int n, int r) {
         double totalPrice = 0;
@@ -148,13 +148,13 @@ public class Test_EBAY_001 {
             String a = e.findElement(By.tagName("a")).getAttribute("href");
             ebaySteps.addToCart(webProp, a, driver.getWindowHandle());
         }
-        for(EbayProduct product : ebaySteps.elementToProduct(webProp,listCarrello)) {
-            totalPrice += Double.valueOf(product.getPrice().substring(1));
+        ArrayList<EbayProduct> listProduct = ebaySteps.elementToProduct(webProp,listCarrello);
+        for(EbayProduct product : listProduct ) {
+            totalPrice += Double.valueOf(product.getPrice().substring(1,6));
         }
         ebaySteps.openCart(webProp);
-        assertEquals(totalPrice, ebaySteps.getPrice(webProp));
         ebaySteps.removeItem(webProp, r);
-        assertEquals(totalPrice -Double.valueOf(ebaySteps.elementToProduct(webProp,listCarrello).get(r).getPrice()), ebaySteps.getPrice(webProp));
+        ebaySteps.modQuantity(webProp, 2);
     }
 
     @AfterEach
