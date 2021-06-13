@@ -2,6 +2,7 @@ package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.Screen;
+import com.palmieri.toolbox.StringStylist;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import io.appium.java_client.android.AndroidDriver;
@@ -12,68 +13,50 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
+import static com.palmieri.toolbox.StringStylist.polishMethodName;
+
 public class AndroidSteps {
 
     AndroidDriver<?> driver = ManagementDriver.getAndroidDriver();
+    private String stepName = "";
 
-        public AndroidSteps() {
+    public String getStepName() {
+        return stepName;
     }
 
-        public boolean clickOnButtonByXpath(String xpath){
-            try {
-                Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                        .withTimeout(Duration.ofSeconds(9))
-                        .pollingEvery(Duration.ofSeconds(3))
-                        .ignoring(NoSuchElementException.class);
+    public void setStepName(String stepName) {
+        this.stepName = stepName;
+    }
 
-
-                WebElement webElement = wait.until(driver -> driver.findElement(By.xpath(xpath)));
-                if (webElement.isDisplayed()) {
-                     webElement.click();
-                     return true;
-                }
-            } catch (TimeoutException e) {
-                System.out.println("Pulsante non trovato xpath: " + xpath);
-
-            } return false;
+    public void clickOnButton(String key,String value){
+        String[] selectorSp = key.split("\\.");
+        char type;
+        if(selectorSp[0].charAt(0) != 'c') type = selectorSp[0].charAt(0);
+        else if(selectorSp[0].charAt(1) == 'l') type = selectorSp[0].charAt(0);
+        else type = 's';
+        setStepName("Click on " + selectorSp[1] + " " + selectorSp[2]);
+        ManagementDriver.waitUntilDisplayed(type,value).click();
         }
 
-    public boolean clickOnButtonById(String id){
-        try {
-            Wait<AndroidDriver<?>> wait = new FluentWait<AndroidDriver<?>>(driver)
-                    .withTimeout(Duration.ofSeconds(9))
-                    .pollingEvery(Duration.ofSeconds(3))
-                    .ignoring(NoSuchElementException.class);
-
-
-            WebElement webElement = wait.until(driver -> driver.findElement(By.id(id)));
-            if (webElement.isDisplayed()) {
-                webElement.click();
-                return true;
-            }
-        } catch (TimeoutException e) {
-            System.out.println("Pulsante non trovato. Id: " + id);
-
-        } return false;
-    }
-
-        public boolean insertUserName(Properties prop,String user) {
-                ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.user")).sendKeys(user);
-                return true;
+    public void insertUserName(Properties prop,String user) {
+        setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
+        ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.user")).sendKeys(user);
         }
 
-    public boolean insertPassword(Properties prop,String pwd) {
-            ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.pwd")).sendKeys(pwd);
-            return true;
+    public void insertPassword(Properties prop,String pwd) {
+        setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
+        ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.pwd")).sendKeys(pwd);
     }
-    public boolean insertName(Properties prop,String name) {
+
+    public void insertName(Properties prop,String name) {
+        setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
         ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.add")).sendKeys(name);
-        return true;
+
     }
 
-    public boolean reset(Properties prop) {
-        if (clickOnButtonById(prop.getProperty("id.btn.reset"))) return true;
-        return false;
+    public void reset(Properties prop) {
+        setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
+        clickOnButton("id.btn.reset",prop.getProperty("id.btn.reset"));
     }
 
     public List<WebElement> getContattiList(Properties prop) {
