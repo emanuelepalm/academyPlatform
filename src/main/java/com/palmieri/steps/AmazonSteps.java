@@ -1,7 +1,7 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,7 +29,7 @@ public class AmazonSteps {
             return webElement;
 
         } catch (TimeoutException e) {
-            Utility.Screenshot("exception_clickOnButtonByXpath");
+            Screen.Screenshot("exception_clickOnButtonByXpath");
             System.out.println("Pulsante non trovato");
         }
         return null;
@@ -73,7 +73,7 @@ public class AmazonSteps {
                 return webElement;
             }
         } catch (TimeoutException e) {
-            Utility.Screenshot("clickOnButtonByClassNameException");
+            Screen.Screenshot("clickOnButtonByClassNameException");
         }
         return null;
     }

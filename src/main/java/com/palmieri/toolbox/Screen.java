@@ -1,6 +1,6 @@
-package com.palmieri;
+package com.palmieri.toolbox;
 
-
+import com.palmieri.ManagementDriver;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -23,17 +23,8 @@ import java.util.Properties;
 
 import static com.palmieri.GlobalParameters.*;
 
-public class Utility {
+public class Screen {
 
-    public static Properties loadProp(String fileName) {
-        Properties props = new Properties();
-        try {
-            props.load(new FileInputStream(PROPERTIES_PATH + File.separator + fileName + EXT_PROP));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return props;
-    }
 
     public static boolean Screenshot(WebDriver driver, String testName) {
         String fileName = testName +  new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
@@ -62,6 +53,7 @@ public class Utility {
 
         }
     }
+
     public static String getBase64Screenshot() {
         try {
             SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -94,6 +86,7 @@ public class Utility {
         }
         return null;
     }
+
     public static String getBase64MobileScreenshot() {
         try {
             SimpleDateFormat oSDF = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -126,7 +119,6 @@ public class Utility {
         }
         return null;
     }
-
 
     public static HashMap<String, Object> createMap(Object o, Object o2) {
         HashMap<String, Object> coordinate = new HashMap<>();

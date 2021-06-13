@@ -1,10 +1,10 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -30,7 +30,7 @@ public class IlMeteoSteps {
             }
         }catch (NoSuchElementException e) {
             System.out.println("Banner non trovato");
-            Utility.Screenshot("closeBannerException");
+            Screen.Screenshot("closeBannerException");
         }
     }
 

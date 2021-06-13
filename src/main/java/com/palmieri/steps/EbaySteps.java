@@ -1,7 +1,7 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
 import com.palmieri.models.EbayProduct;
 import com.palmieri.models.SelectMenuEbay;
 import org.openqa.selenium.*;
@@ -38,7 +38,7 @@ public class EbaySteps {
             }
         }catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Banner non trovato");
-            Utility.Screenshot("closeBannerException");
+            Screen.Screenshot("closeBannerException");
 
         }
     }
@@ -56,7 +56,7 @@ public class EbaySteps {
             }
         }catch (NoSuchElementException | TimeoutException e) {
             System.out.println("Banner non trovato");
-            Utility.Screenshot("closeBannerFluentException");
+            Screen.Screenshot("closeBannerFluentException");
         }
     }
 
@@ -131,7 +131,7 @@ public class EbaySteps {
         clickOnButtonById(prop.getProperty("id.input.password")).sendKeys("Able1234.");
         clickOnButtonById(prop.getProperty("id.btn.submit"));
         driver.findElement(By.name(prop.getProperty("name.btn.replace")));
-        Utility.Screenshot("Register");
+        Screen.Screenshot("Register");
     }
 
     public ArrayList<WebElement> getCartList(Properties prop, int i) {
@@ -170,7 +170,7 @@ public class EbaySteps {
         for(int i = 1; i < n; i++) {
             clickOnButtonByClassName(prop.getProperty("class.next.btn"));
             for(EbayProduct e : getProducts(prop)) e.print();
-            Utility.Screenshot("forward"+i);
+            Screen.Screenshot("forward"+i);
             if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i+1) )) return false;
         }
         return true;
@@ -180,7 +180,7 @@ public class EbaySteps {
         for(int i = n; i > 1; i--) {
             clickOnButtonByClassName(prop.getProperty("class.previous.btn"));
             //for(EbayProduct e : getProducts(prop)) e.print();
-            //Utility.Screenshot("backward"+i);
+            //Screen.Screenshot("backward"+i);
             if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i - 1) )) return false;
         }
         return true;
@@ -200,7 +200,7 @@ public class EbaySteps {
             }
         } catch (TimeoutException e) {
             System.out.println("Banner non trovato");
-            Utility.Screenshot("clickOnButtonByClassNameException");
+            Screen.Screenshot("clickOnButtonByClassNameException");
         }
     }
 
@@ -218,7 +218,7 @@ public class EbaySteps {
                 return webElement;
             }
         } catch (TimeoutException e) {
-            Utility.Screenshot("clickOnButtonByClassNameException");
+            Screen.Screenshot("clickOnButtonByClassNameException");
         }
         return null;
     }
@@ -247,7 +247,7 @@ public class EbaySteps {
             }
         } catch (TimeoutException e) {
             System.out.println("Pulsante non trovato");
-            Utility.Screenshot("clickOnButtonByClassNameException");
+            Screen.Screenshot("clickOnButtonByClassNameException");
         }
     }
 }

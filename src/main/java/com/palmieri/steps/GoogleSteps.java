@@ -1,7 +1,7 @@
 package com.palmieri.steps;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,7 +27,7 @@ public class GoogleSteps {
                 webElement.click();
 
         } catch (TimeoutException e) {
-            Utility.Screenshot("exception_clickOnButtonByXpath");
+            Screen.Screenshot("exception_clickOnButtonByXpath");
             System.out.println("Pulsante non trovato");
         }
     }
@@ -43,7 +43,7 @@ public class GoogleSteps {
                 webElement.sendKeys(Keys.ENTER);
             }
         }catch (NoSuchElementException | TimeoutException e) {
-            Utility.Screenshot("searchException");
+            Screen.Screenshot("searchException");
             System.out.println(e.getCause() + " " + e.getMessage());
         }
 

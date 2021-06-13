@@ -2,7 +2,7 @@ package com.palmieri.web;
 
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.*;
 import com.palmieri.steps.AmazonSteps;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -41,7 +41,7 @@ public class Test_AMAZON_001 {
             }
             extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + EXT_HTML, true);
             extentReports.loadConfig(new File(REPORT_CONFIG_XML));
-            webProp = Utility.loadProp(propname);
+            webProp = Utils.loadProp(propname);
             managementDriver.startDriver(defaultChromeOptions);
             driver = ManagementDriver.getChromeDriver();
             steps = new AmazonSteps();
@@ -59,16 +59,16 @@ public class Test_AMAZON_001 {
                 driver.navigate().to(webProp.getProperty("amazon.url"));
                 extentTest.log(LogStatus.INFO, "Apro Amazon", " ");
                 steps.search(webProp, "iphone");
-                extentTest.log(LogStatus.INFO, "Cerco iphone", extentTest.addBase64ScreenShot(Utility.getBase64MobileScreenshot()));
+                extentTest.log(LogStatus.INFO, "Cerco iphone", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
                 steps.orderBy(webProp);
-                extentTest.log(LogStatus.INFO, "Ordino per ultimi arrivati", extentTest.addBase64ScreenShot(Utility.getBase64MobileScreenshot()));
+                extentTest.log(LogStatus.INFO, "Ordino per ultimi arrivati", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
                 steps.selectBrand(webProp);
-                extentTest.log(LogStatus.INFO, "Seleziono Brand Apple", extentTest.addBase64ScreenShot(Utility.getBase64MobileScreenshot()));
+                extentTest.log(LogStatus.INFO, "Seleziono Brand Apple", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
                 steps.selectProduct(webProp, 2);
             }
             catch (Exception e) {
                 System.err.println(e.getMessage());
-                extentTest.log(LogStatus.FAIL,e.getMessage(),extentTest.addBase64ScreenShot(Utility.getBase64Screenshot()));
+                extentTest.log(LogStatus.FAIL,e.getMessage(),extentTest.addBase64ScreenShot(Screen.getBase64Screenshot()));
             }
         }
 

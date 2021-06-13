@@ -3,7 +3,8 @@ package com.palmieri.web;
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.steps.IlMeteoSteps;
 import com.palmieri.ManagementDriver;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
+import com.palmieri.toolbox.Utils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +12,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -36,7 +36,7 @@ public class Test_ILMETEO_001 {
             defaultChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
         }
         managementDriver.startDriver(defaultChromeOptions);
-        webProp = Utility.loadProp(propname);
+        webProp = Utils.loadProp(propname);
         managementDriver.startDriver(defaultChromeOptions);
         driver = ManagementDriver.getChromeDriver();
         steps = new IlMeteoSteps();

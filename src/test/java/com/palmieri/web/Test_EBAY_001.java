@@ -4,7 +4,8 @@ import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.models.EbayProduct;
 import com.palmieri.steps.EbaySteps;
-import com.palmieri.Utility;
+import com.palmieri.toolbox.Screen;
+import com.palmieri.toolbox.Utils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -38,7 +39,7 @@ public class Test_EBAY_001 {
             defaultChromeOptions.addArguments("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1");
         }
         managementDriver.startDriver(defaultChromeOptions);
-        webProp = Utility.loadProp(propname);
+        webProp = Utils.loadProp(propname);
 
         driver = ManagementDriver.getChromeDriver();
         ebaySteps = new EbaySteps();
