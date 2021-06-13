@@ -1,19 +1,12 @@
-package com.palmieri.steps;
+package com.palmieri.steps.mobile;
 
 import com.palmieri.ManagementDriver;
-import com.palmieri.toolbox.Screen;
 import com.palmieri.toolbox.StringStylist;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import java.time.Duration;
+
 import java.util.List;
 import java.util.Properties;
-
-import static com.palmieri.toolbox.StringStylist.polishMethodName;
 
 public class AndroidSteps {
 

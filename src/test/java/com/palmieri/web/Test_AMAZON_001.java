@@ -3,7 +3,7 @@ package com.palmieri.web;
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.*;
-import com.palmieri.steps.AmazonSteps;
+import com.palmieri.steps.web.AmazonSteps;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;

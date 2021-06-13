@@ -1,9 +1,8 @@
 package com.palmieri.web;
 
 import com.palmieri.DefaultChromeOptions;
-import com.palmieri.steps.IlMeteoSteps;
+import com.palmieri.steps.web.IlMeteoSteps;
 import com.palmieri.ManagementDriver;
-import com.palmieri.toolbox.Screen;
 import com.palmieri.toolbox.Utils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,4 +1,4 @@
-package com.palmieri.steps;
+package com.palmieri.steps.web;
 
 import com.palmieri.ManagementDriver;
 import org.openqa.selenium.*;

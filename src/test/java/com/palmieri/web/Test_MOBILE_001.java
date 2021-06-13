@@ -2,7 +2,7 @@ package com.palmieri.web;
 
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.Screen;
-import com.palmieri.steps.AndroidSteps;
+import com.palmieri.steps.mobile.AndroidSteps;
 import com.palmieri.toolbox.Utils;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;

@@ -1,9 +1,9 @@
-package com.palmieri.web;
+package com.palmieri.mobile;
 
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.Screen;
-import com.palmieri.steps.WebSteps;
+import com.palmieri.steps.web.WebSteps;
 import com.palmieri.toolbox.Utils;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
