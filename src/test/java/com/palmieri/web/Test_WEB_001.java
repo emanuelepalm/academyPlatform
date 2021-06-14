@@ -1,4 +1,4 @@
-package com.palmieri.mobile;
+package com.palmieri.web;
 
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;

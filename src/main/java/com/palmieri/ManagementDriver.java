@@ -75,8 +75,8 @@ public class ManagementDriver {
     public static WebElement waitUntilDisplayed(char type,String selector) {
         if (driver != null) {
             Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(9))
-                    .pollingEvery(Duration.ofSeconds(3))
+                    .withTimeout(Duration.ofSeconds(5))
+                    .pollingEvery(Duration.ofMillis(300))
                     .ignoring(NoSuchElementException.class);
             switch (type) {
                 case 'x':
@@ -96,7 +96,7 @@ public class ManagementDriver {
         if (androidDriver != null) {
             Wait<WebDriver> wait = new FluentWait<WebDriver>(androidDriver)
                     .withTimeout(Duration.ofSeconds(5))
-                    .pollingEvery(Duration.ofMillis(500))
+                    .pollingEvery(Duration.ofMillis(300))
                     .ignoring(NoSuchElementException.class);
             switch (type) {
                 case 'x':
@@ -114,11 +114,12 @@ public class ManagementDriver {
             }
         } return null;
     }
+
     public static List<WebElement> waitUntilListDisplayed(char type, String selector) {
         if (driver != null) {
             Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                    .withTimeout(Duration.ofSeconds(9))
-                    .pollingEvery(Duration.ofSeconds(3))
+                    .withTimeout(Duration.ofSeconds(5))
+                    .pollingEvery(Duration.ofMillis(300))
                     .ignoring(NoSuchElementException.class);
             switch (type) {
                 case 'x':
@@ -137,7 +138,7 @@ public class ManagementDriver {
         }
         if (androidDriver != null) {
             Wait<WebDriver> wait = new FluentWait<WebDriver>(androidDriver)
-                    .withTimeout(Duration.ofSeconds(5))
+                    .withTimeout(Duration.ofSeconds(3))
                     .pollingEvery(Duration.ofMillis(500))
                     .ignoring(NoSuchElementException.class);
             switch (type) {

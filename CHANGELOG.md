@@ -1,4 +1,4 @@
-**Versione 1.0**
+**Versione 1.1**
 - Creazione getProperties
 - Creazione gestione Driver
 - Aggiunta GlobalParameters aggiornato
@@ -22,7 +22,27 @@
  \-Controllare che il titolo e il nome della scheda nel menu combacino  
  \-Creazione `IlMeteoSteps` metodi ricerca, chiudi banner e getMenuTabs
 
+`Test Amazon`    
+ \-Creazione `AmazonSteps` metodi ricerca, chiudi banner e getMenuTabs
 
 
-- Gestione delle properties in tre file separati (uno per classe)
+`Test Mobile`  
+ \-Test sulla login corretta e due fallimentari   
+ \-Test sull'aggiunta di un utente  
+ \-Test sull'eliminazione degli utenti    
+ \-Creazione `MobileSteps` inserisci user, password e nome  
+ 
+`ToolBox`  Contenente tutte le utilities  
+ \- _Utils_ gestisce le properties  
+ \- _Screen_ gestisce gli screenshot  
+ \- _StringStylist_ abbellisce i nomi dei metodi   
+
+
+ - Introdotto il template per gli steps mobile
+ - Le classi steps hanno la possibilità di prendere il nome del metodo che viene lanciato per riportarlo nel report
+ 
+
+
+- Gestione delle properties in file separati (2 per classe se web, uno web classico e uno web mobile)
+
 

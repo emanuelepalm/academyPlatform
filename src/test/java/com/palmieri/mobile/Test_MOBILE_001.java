@@ -1,4 +1,4 @@
-package com.palmieri.web;
+package com.palmieri.mobile;
 
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.Screen;
@@ -55,20 +55,19 @@ public class Test_MOBILE_001 {
     void beforeEach() {
     }
 
-    @ParameterizedTest(name = "Login Ok")
-    @CsvSource({"admin ,benvenuto: admin"})
+    @ParameterizedTest(name = "Login Ok  con user = {0}" )
+    @CsvSource({"admin,benvenuto:","user, benvenuto:"})
     @DisplayName("Login OK")
     void test_001(String login,String assertion, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
         try {
-            steps.reset(androidProp);
             steps.insertUserName(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.insertPassword(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.welcome.text")).getText().toLowerCase().contains(assertion));
+            assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.welcome.text")).getText().toLowerCase().contains(assertion + " " + login));
             extentTest.log(LogStatus.PASS, "Login Effettuato con Successo", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.clickOnButton("xpath.btn.logout",androidProp.getProperty("xpath.btn.logout"));
         }
@@ -143,6 +142,7 @@ public class Test_MOBILE_001 {
             List<WebElement> contattiList = steps.getContattiList(androidProp);
             assertEquals(contattiList.get(contattiList.size()-1).getText(),name);
             extentTest.log(LogStatus.PASS, "Contatto Aggiunto con Successo", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
+            for(WebElement e : contattiList) assertTrue(!e.getText().isEmpty());
             steps.clickOnButton("xpath.btn.logout",androidProp.getProperty("xpath.btn.logout"));
         }
         catch (Exception e) {
@@ -176,6 +176,7 @@ public class Test_MOBILE_001 {
             fail();
         }
     }
+
     @AfterEach
     void tearDown() {
         extentReports.endTest(extentTest);
