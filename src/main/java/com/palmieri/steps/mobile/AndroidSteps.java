@@ -1,6 +1,7 @@
 package com.palmieri.steps.mobile;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.interfaces.ISteps;
 import com.palmieri.toolbox.StringStylist;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
@@ -8,7 +9,7 @@ import org.openqa.selenium.*;
 import java.util.List;
 import java.util.Properties;
 
-public class AndroidSteps {
+public class AndroidSteps implements ISteps {
 
     AndroidDriver<?> driver = ManagementDriver.getAndroidDriver();
     private String stepName = "";
@@ -33,11 +34,13 @@ public class AndroidSteps {
 
     public void insertUserName(Properties prop,String user) {
         setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
+        ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.user")).clear();
         ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.user")).sendKeys(user);
         }
 
     public void insertPassword(Properties prop,String pwd) {
         setStepName(StringStylist.polishMethodName(new AndroidSteps(){}.getClass().getEnclosingMethod().getName()));
+        ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.pwd")).clear();
         ManagementDriver.waitUntilDisplayed('i',prop.getProperty("id.input.pwd")).sendKeys(pwd);
     }
 

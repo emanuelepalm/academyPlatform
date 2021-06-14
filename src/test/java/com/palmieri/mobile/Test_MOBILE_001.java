@@ -1,6 +1,7 @@
 package com.palmieri.mobile;
 
 import com.palmieri.ManagementDriver;
+import com.palmieri.toolbox.ReportManager;
 import com.palmieri.toolbox.Screen;
 import com.palmieri.steps.mobile.AndroidSteps;
 import com.palmieri.toolbox.Utils;
@@ -35,6 +36,7 @@ public class Test_MOBILE_001 {
     static private ExtentReports extentReports;
     static private ExtentTest extentTest;
     static private AndroidSteps steps;
+    private ReportManager repo;
 
     @BeforeAll
     static void beforeAll() {
@@ -60,16 +62,18 @@ public class Test_MOBILE_001 {
     @DisplayName("Login OK")
     void test_001(String login,String assertion, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
+        repo = new ReportManager(extentTest,androidProp,steps);
         try {
             steps.insertUserName(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.insertPassword(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
+            repo.cleanClick("id.btn.login");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.welcome.text")).getText().toLowerCase().contains(assertion + " " + login));
             extentTest.log(LogStatus.PASS, "Login Effettuato con Successo", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("xpath.btn.logout",androidProp.getProperty("xpath.btn.logout"));
+            repo.cleanClick("xpath.btn.logout");
+
         }
         catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
@@ -82,15 +86,18 @@ public class Test_MOBILE_001 {
     @DisplayName("Login Solo Username")
     void test_002(String login,String assertion, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
+        repo = new ReportManager(extentTest, androidProp, steps);
         try {
-            steps.reset(androidProp);
+
             steps.insertUserName(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
+            repo.cleanClick("id.btn.login");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.msg.error")).getText().toLowerCase().contains(assertion));
             extentTest.log(LogStatus.PASS, "Messaggio di errore contenente: " + assertion, extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.ok.error",androidProp.getProperty("id.ok.error"));
+            repo.cleanClick("id.ok.error");
+            repo.cleanClick("id.btn.reset");
+
         }
         catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
@@ -103,15 +110,18 @@ public class Test_MOBILE_001 {
     @DisplayName("Login Solo Password")
     void test_003(String login,String assertion, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
+        repo = new ReportManager(extentTest, androidProp, steps);
+
         try {
-            steps.reset(androidProp);
             steps.insertPassword(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
+            repo.cleanClick("id.btn.login");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.msg.error")).getText().toLowerCase().contains(assertion));
             extentTest.log(LogStatus.PASS, "Messaggio di errore contenente: " + assertion, extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.ok.error",androidProp.getProperty("id.ok.error"));
+            repo.cleanClick("id.ok.error");
+            repo.cleanClick("id.btn.reset");
+
         }
         catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
@@ -124,26 +134,27 @@ public class Test_MOBILE_001 {
     @DisplayName("Aggiungo un utente")
     void test_004(String login,String assertion,String name, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
+        repo = new ReportManager(extentTest, androidProp, steps);
+
         try {
-            steps.reset(androidProp);
             steps.insertUserName(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.insertPassword(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
+            repo.cleanClick("id.btn.login");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.welcome.text")).getText().toLowerCase().contains(assertion));
-            steps.clickOnButton("id.btn.add",androidProp.getProperty("id.btn.add"));
+            repo.cleanClick("id.btn.add");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.insertName(androidProp, name);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.confirm.add",androidProp.getProperty("id.confirm.add"));
+            repo.cleanClick("id.confirm.add");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             List<WebElement> contattiList = steps.getContattiList(androidProp);
             assertEquals(contattiList.get(contattiList.size()-1).getText(),name);
             extentTest.log(LogStatus.PASS, "Contatto Aggiunto con Successo", extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             for(WebElement e : contattiList) assertTrue(!e.getText().isEmpty());
-            steps.clickOnButton("xpath.btn.logout",androidProp.getProperty("xpath.btn.logout"));
+            repo.cleanClick("xpath.btn.logout");
         }
         catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
@@ -156,20 +167,21 @@ public class Test_MOBILE_001 {
     @DisplayName("Elimina utenti")
     void test_004(String login,String assertion, TestInfo testInfo)  {
         extentTest = extentReports.startTest(testInfo.getDisplayName());
+        repo = new ReportManager(extentTest, androidProp, steps);
         try {
             steps.insertUserName(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             steps.insertPassword(androidProp, login);
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.btn.login",androidProp.getProperty("id.btn.login"));
+            repo.cleanClick("id.btn.login");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(ManagementDriver.waitUntilDisplayed('i',androidProp.getProperty("id.welcome.text")).getText().toLowerCase().contains(assertion));
             steps.clickOnButton("id.btn.delAll",androidProp.getProperty("id.btn.delAll"));
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
-            steps.clickOnButton("id.ok.delAll",androidProp.getProperty("id.ok.delAll"));
+            repo.cleanClick("id.ok.delAll");
             extentTest.log(LogStatus.INFO, steps.getStepName(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
             assertTrue(steps.getContattiList(androidProp).isEmpty());
-            steps.clickOnButton("xpath.btn.logout",androidProp.getProperty("xpath.btn.logout"));
+            repo.cleanClick("xpath.btn.logout");
         }
         catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
