@@ -2,7 +2,7 @@ package com.palmieri.web;
 
 import com.palmieri.DefaultChromeOptions;
 import com.palmieri.ManagementDriver;
-import com.palmieri.models.EbayProduct;
+import com.palmieri.models.Product;
 import com.palmieri.steps.web.EbaySteps;
 import com.palmieri.toolbox.Utils;
 import org.junit.jupiter.api.*;
@@ -108,7 +108,7 @@ public class Test_EBAY_001 {
         driver.get(webProp.getProperty("ebay.url"));
         ebaySteps.search(webProp, q);
 
-         for(EbayProduct p : ebaySteps.getProducts(webProp)) {
+         for(Product p : ebaySteps.getProducts(webProp)) {
             p.print();
         }
     }
@@ -148,8 +148,8 @@ public class Test_EBAY_001 {
             String a = e.findElement(By.tagName("a")).getAttribute("href");
             ebaySteps.addToCart(webProp, a, driver.getWindowHandle());
         }
-        ArrayList<EbayProduct> listProduct = ebaySteps.elementToProduct(webProp,listCarrello);
-        for(EbayProduct product : listProduct ) {
+        ArrayList<Product> listProduct = ebaySteps.elementToProduct(webProp,listCarrello);
+        for(Product product : listProduct ) {
             totalPrice += Double.valueOf(product.getPrice().substring(1,6));
         }
         ebaySteps.openCart(webProp);

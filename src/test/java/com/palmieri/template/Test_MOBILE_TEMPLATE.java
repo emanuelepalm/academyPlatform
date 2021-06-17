@@ -30,7 +30,7 @@ public class Test_MOBILE_TEMPLATE {
     static private ManagementDriver managementDriver = null;
     static private AndroidDriver driver = null;
     static private Properties androidProp = null;
-    static private String propname = "android";
+    static private String propname = "mobile_template";
     static private ExtentReports extentReports;
     static private ExtentTest extentTest;
     static private ISteps steps;
@@ -43,7 +43,7 @@ public class Test_MOBILE_TEMPLATE {
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, " emulator-5554 ");
         desiredCapabilities.setCapability(MobileCapabilityType.APP, RESOURCES_PATH + File.separator + "appname" + EXT_ANDROID);
         ManagementDriver.startAppium(desiredCapabilities);
-        extentReports = new ExtentReports(REPORT_PATH + File.separator + "reportTemplate" + EXT_HTML, false);
+        extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + propname + EXT_HTML, false);
         extentReports.loadConfig(new File(REPORT_CONFIG_XML));
         androidProp = Utils.loadProp(propname);
         driver = ManagementDriver.getAndroidDriver();

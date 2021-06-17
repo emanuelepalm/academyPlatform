@@ -2,7 +2,7 @@ package com.palmieri.steps.web;
 
 import com.palmieri.ManagementDriver;
 import com.palmieri.toolbox.Screen;
-import com.palmieri.models.EbayProduct;
+import com.palmieri.models.Product;
 import com.palmieri.models.SelectMenuEbay;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
@@ -76,32 +76,32 @@ public class EbaySteps {
                 );
     }
 
-    public ArrayList<EbayProduct> getProducts(Properties prop) {
-        ArrayList<EbayProduct> ebayProducts = new ArrayList<>();
+    public ArrayList<Product> getProducts(Properties prop) {
+        ArrayList<Product> products = new ArrayList<>();
         for (WebElement e : driver.findElement(By.xpath(prop.getProperty("xpath.div.result"))).findElements(By.className("s-item"))) {
-            ebayProducts.add(new EbayProduct(e.findElement(By.tagName("h3")).getText(),
+            products.add(new Product(e.findElement(By.tagName("h3")).getText(),
                             e.findElement(By.className(prop.getProperty("class.result.subtitle"))).getText(),
                             e.findElement(By.className(prop.getProperty("class.result.price"))).getText(),
                             e.findElement(By.className(prop.getProperty("class.img.result"))).getAttribute("src")
                             ));
         }
-        return  ebayProducts;
+        return products;
     }
 
     public void openCart(Properties prop){
         clickOnButtonByClassName(prop.getProperty("class.cart.btn"));
     }
 
-    public ArrayList<EbayProduct> elementToProduct(Properties prop, List<WebElement> list) {
-        ArrayList<EbayProduct> ebayProducts = new ArrayList<>();
+    public ArrayList<Product> elementToProduct(Properties prop, List<WebElement> list) {
+        ArrayList<Product> products = new ArrayList<>();
         for (WebElement e : list) {
-            ebayProducts.add(new EbayProduct(e.findElement(By.tagName("h3")).getText(),
+            products.add(new Product(e.findElement(By.tagName("h3")).getText(),
                     e.findElement(By.className(prop.getProperty("class.result.subtitle"))).getText(),
                     e.findElement(By.className(prop.getProperty("class.result.price"))).getText(),
                     e.findElement(By.className(prop.getProperty("class.img.result"))).getAttribute("src")
             ));
         }
-        return  ebayProducts;
+        return products;
     }
 
     public List<WebElement> getWebProducts(Properties prop) {
@@ -169,7 +169,7 @@ public class EbaySteps {
     public boolean forward(Properties prop, int n) {
         for(int i = 1; i < n; i++) {
             clickOnButtonByClassName(prop.getProperty("class.next.btn"));
-            for(EbayProduct e : getProducts(prop)) e.print();
+            for(Product e : getProducts(prop)) e.print();
             Screen.Screenshot("forward"+i);
             if(i>1 && !driver.getCurrentUrl().contains("pgn=" + (i+1) )) return false;
         }

@@ -25,7 +25,7 @@ public class Test_BERSHKA_001 {
     static private ManagementDriver managementDriver = null;
     static private AndroidDriver driver = null;
     static private Properties androidProp = null;
-    static private String propname = "zara";
+    static private String propname = "bershka";
     static private ExtentReports extentReports;
     static private ExtentTest extentTest;
     static private BershkaSteps steps;
@@ -36,9 +36,9 @@ public class Test_BERSHKA_001 {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, " emulator-5554 ");
-        desiredCapabilities.setCapability(MobileCapabilityType.APP, RESOURCES_PATH + File.separator + "Zara_v10.25.0_apkpure.com" + EXT_ANDROID);
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, RESOURCES_PATH + File.separator + "Bershka_v2.57.2_apkpure.com" + EXT_ANDROID);
         ManagementDriver.startAppium(desiredCapabilities);
-        extentReports = new ExtentReports(REPORT_PATH + File.separator + "reportTemplate" + EXT_HTML, false);
+        extentReports = new ExtentReports(REPORT_PATH + File.separator + "report" + propname + EXT_HTML, false);
         extentReports.loadConfig(new File(REPORT_CONFIG_XML));
         androidProp = Utils.loadProp(propname);
         driver = ManagementDriver.getAndroidDriver();
@@ -58,6 +58,7 @@ public class Test_BERSHKA_001 {
             steps.getToHome(androidProp);
         }catch (Exception e) {
             extentTest.log(LogStatus.ERROR, "Step: " + steps.getStepName() + "\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
+            System.out.println(e.getMessage());
             fail();
         }
     }
@@ -69,7 +70,7 @@ public class Test_BERSHKA_001 {
 
     @AfterAll
     static void tearDownAll() {
-        //managementDriver.stopDriver();
+        managementDriver.stopDriver();
         extentReports.flush();
     }
 }

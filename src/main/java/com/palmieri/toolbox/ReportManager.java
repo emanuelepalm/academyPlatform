@@ -3,6 +3,7 @@ package com.palmieri.toolbox;
 import com.palmieri.interfaces.ISteps;
 import com.palmieri.steps.mobile.AndroidSteps;
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 import java.util.Properties;
 
@@ -33,9 +34,18 @@ public class ReportManager {
         this.prop = prop;
     }
 
-    public void cleanClick(String key) {
-        steps.clickOnButton(key,prop.getProperty(key));
+    public boolean cleanClick(String key) {
+        try
+        {
+            steps.setStepName("Click on " + key);
+            steps.clickOnButton(key,prop.getProperty(key));
+            extentTest.log(LogStatus.INFO, "Click on: " + key,"");
+            return true;
+        }
+        catch (Exception e)
+        {
+            extentTest.log(LogStatus.ERROR, "Click on: " + key + "Failed\nErrore: " +  e.getMessage(), extentTest.addBase64ScreenShot(Screen.getBase64MobileScreenshot()));
+        }
+        return false;
     }
-
-
 }

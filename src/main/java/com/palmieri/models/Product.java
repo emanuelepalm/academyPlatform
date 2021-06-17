@@ -1,6 +1,6 @@
 package com.palmieri.models;
 
-public class EbayProduct {
+public class Product {
     private String name;
     private String desc;
     private String price;
@@ -8,7 +8,7 @@ public class EbayProduct {
 
 
 
-    public EbayProduct(String name, String desc, String price, String imgHref) {
+    public Product(String name, String desc, String price, String imgHref) {
         this.name = name;
         this.desc = desc;
         this.price = price;
